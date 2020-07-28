@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>JW Travel</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container">
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const travelid = urlParams.get('travelid');
+        // API url
+        const baseUrl = "http://localhost:8081";
+        // hardcoded because we have not added login yet.
+        // const loggedInUserID = 1;
+
+
+        axios.all([axios.get(`${baseUrl}/travel/${travelid}/itinerary`),
+        axios.get(`${baseUrl}/travel/${travelid}`)])
+            .then(axios.spread((firstResponse, secondResponse, thirdResponse) => {
+                const days = firstResponse.data;
+                days.forEach((day) => {
+                    const dayHtml = `
+                <div class="col-4 card" style="margin-top: 2rem;">
+                    <div class="card-body">
+                       <b><p class="card-title">Day ${day.day}</p></b>
+                       <p class="card-activity"><b>Activity:</b><br>${day.activity}</p>
+                    </div>
+                </div>
+                `;
+                    $("#days").append(dayHtml);
+                });
+                const travels = secondResponse.data;
+                console.log(travels)
+                const descHtml = `<h3 class="desc">${travels[0].description}</h3>`;
+                console.log(descHtml)
+                $("#page-title").append(descHtml);
+            }))
+            .catch(error => console.log(error));
+        //DISPLAYS DAYS
+        // axios.get(`${baseUrl}/travel/${travelid}/itinerary`)
+        //     .then((response) => {
+        //         const days = response.data;
+        //         days.forEach((day) => {
+        //             const dayHtml = `
+        //         <div class="col-4 card" style="margin-top: 2rem;">
+        //             <div class="card-body">
+        //                <b><p class="card-title">Day ${day.day}</p></b>
+        //                <p class="card-activity"><b>Activity:</b><br>${day.activity}</p>
+        //             </div>
+        //         </div>
+        //         `;
+        //             $("#days").append(dayHtml);
+        //         });
+        //     })
+        //     .catch((error) => {
+        //         console.log(error);
+        //     });
+
+        // // DISPLAYS DESCRIPTION   
+        // axios.get(`${baseUrl}/travel/${travelid}`)
+        //     .then((response) => {
+        //         const travels = response.data;
+        //         console.log(travels)
+        //         const descHtml = `<h2 class="desc"> ${travels.description} </h2>`
+        //         $("#page-title").insertAfter(descHtml)
+        //     })
+        //     .catch((error) => {
+        //         console.log(error);
+        //     });
+
+    </script>
+
+    <div class="container">
+        <nav class="nav">
+            <a class="nav-link" href="/main.html">Home</a>
+            <a class="nav-link" href="/users/">All Users</a>
+        </nav>
+
+        <div style="margin-top: 2rem;">
+            <h1 id="page-title">Itinerary</h1>
+
+            <!-- <form id="create-post-form" style="margin-top: 2rem;">
+                <div class="form-group">
+                    <textarea class="form-control" id="create-post-form-body" rows="3"
+                        placeholder="What's on your mind?"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Create Post</button>
+            </form> -->
+
+            <div class="container">
+                <div id="days" class="row no-gutters">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

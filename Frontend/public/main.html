@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>JW Travel</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container">
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        // API url
+        const baseUrl = "http://localhost:8081";
+        // hardcoded because we have not added login yet.
+        // const loggedInUserID = 1;
+
+        axios.get(`${baseUrl}/travel`)
+            .then((response) => {
+                const travels = response.data;
+                travels.forEach((record) => {
+                    const recordHtml = `
+                <div class="col-4 card" style="margin-top: 2rem;">
+                    <div class="card-body">
+                       <b><p class="card-title">${record.title}</p></b>
+                       <p class="card-price"><b>Price:</b> $${record.price}</p>
+                       <p class="card-period"><b>Departure date:</b><br>${record.travelPeriod}</p>
+                       <p class="card-country"><b>Country:</b> ${record.country}</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="/itinerary.html?travelid=${record.travelid}">View Itinerary<a/>
+                    </div>
+                </div>
+                `;
+                    $("#travels").append(recordHtml);
+                });
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+
+    </script>
+
+    <div class="container">
+        <nav class="nav">
+            <a class="nav-link" href="/main.html">Home</a>
+            <!-- <a class="nav-link" href="/users/">All Users</a> -->
+        </nav>
+
+        <div style="margin-top: 2rem;margin-bottom: 2rem;">
+            <h1>Travel Destinations</h1>
+
+            <form action="/search.html?${}">
+                <div class="single-element-widget mt-30">
+                    <h3 class="mb-30">Search Tour Packages</h3>
+                    <div class="default-select" id="default-select"">
+                        <select>
+                        <option value=" 1">English</option>
+                        <option value="1">Spanish</option>
+                        <option value="1">Arabic</option>
+                        <option value="1">Portuguise</option>
+                        <option value="1">Bengali</option>
+                        </select>
+                    </div>
+                    <div class="default-select" id="default-select"">
+                        <select>
+                        <option value=" 1">English</option>
+                        <option value="1">Spanish</option>
+                        <option value="1">Arabic</option>
+                        <option value="1">Portuguise</option>
+                        <option value="1">Bengali</option>
+                        </select>
+                    </div>
+                    <div class="default-select" id="default-select"">
+                        <select>
+                        <option value="1">English</option>
+                        <option value="1">Spanish</option>
+                        <option value="1">Arabic</option>
+                        <option value="1">Portuguise</option>
+                        <option value="1">Bengali</option>
+                        </select>
+                    </div>
+                    <input type="submit" value="Search">
+                </div>
+            </form>
+
+            <div class="container">
+                <div id="travels" class="row no-gutters">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
