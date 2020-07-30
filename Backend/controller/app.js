@@ -32,12 +32,12 @@ app.get('/travel/:id', function (req, res) {
      });
  });
 
- app.get('/search/', function (req, res) {
+ app.get('/search', function (req, res) {
 
     var country = req.query.country;
     var price = req.query.price;
     var period = req.query.period;
-
+    
     travelDB.getTravelsSearch(country,price,period, function (err, result) {
          res.type('json');
          if (err) {           

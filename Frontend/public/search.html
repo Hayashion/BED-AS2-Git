@@ -30,9 +30,10 @@
         // API url
         const baseUrl = "http://localhost:8081";
 
-        axios.get(`${baseUrl}/search`)
+        axios.get(`${baseUrl}/search`, { params: { country: country, price: price, period: period } })
             .then((response) => {
                 const travels = response.data;
+                console.log(travels)
                 travels.forEach((record) => {
                     const recordHtml = `
                 <div class="col-4 card" style="margin-top: 2rem;">
@@ -47,7 +48,7 @@
                     </div>
                 </div>
                 `;
-                    $("#travels").append(recordHtml);
+                    $("#search").append(recordHtml);
                 });
             })
             .catch((error) => {
@@ -65,7 +66,7 @@
         <div style="margin-top: 2rem;">
             <h1 id="page-title">Search Results</h1>
             <div class="container">
-                <div id="days" class="row no-gutters">
+                <div id="search" class="row no-gutters">
                 </div>
             </div>
         </div>

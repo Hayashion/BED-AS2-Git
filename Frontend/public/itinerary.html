@@ -27,10 +27,6 @@
         const travelid = urlParams.get('travelid');
         // API url
         const baseUrl = "http://localhost:8081";
-        // hardcoded because we have not added login yet.
-        // const loggedInUserID = 1;
-
-
         axios.all([axios.get(`${baseUrl}/travel/${travelid}/itinerary`),
         axios.get(`${baseUrl}/travel/${travelid}`)])
             .then(axios.spread((firstResponse, secondResponse, thirdResponse) => {

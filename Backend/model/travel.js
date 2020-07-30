@@ -29,8 +29,8 @@ var travelDB = {
                 return callback(err, null);
             }
             else {
-                var sql = 'SELECT * FROM travel WHERE country=? AND period=?';
-                conn.query(sql, [id], function (err, result) {
+                var sql = 'SELECT * FROM travel WHERE country=? and travelPeriod=?';
+                conn.query(sql, [country,period], function (err, result) {
                     conn.end();
                     if (err) {
                         return callback(err, null);

@@ -25,9 +25,6 @@
     <script>
         // API url
         const baseUrl = "http://localhost:8081";
-        // hardcoded because we have not added login yet.
-        // const loggedInUserID = 1;
-
         axios.get(`${baseUrl}/travel`)
             .then((response) => {
                 const travels = response.data;
@@ -60,14 +57,14 @@
             <!-- <a class="nav-link" href="/users/">All Users</a> -->
         </nav>
 
-        <div style="margin-top: 2rem;margin-bottom: 2rem;">
+        <div style="margin-top: 2rem;">
             <h1>Travel Destinations</h1>
 
             <h3 class="mb-30">Search Tour Packages</h3>
             <form action="/search.html">
                 <label for="country">Country:</label>
                 <select id="country" name="country">
-                    <option value="volvo">Volvo</option>
+                    <option value="Japan">Japan</option>
                     <option value="saab">Saab</option>
                     <option value="fiat">Fiat</option>
                     <option value="audi">Audi</option>
@@ -80,8 +77,8 @@
                     <option value="audi">Audi</option>
                 </select>
                 <label for="period">Travel Period</label>
-                <select id="period" name="price">
-                    <option value="Mar 2021">Volvo</option>
+                <select id="period" name="period">
+                    <option value="Mar 2021">Mar 2021</option>
                     <option value="saab">Saab</option>
                     <option value="fiat">Fiat</option>
                     <option value="audi">Audi</option>
