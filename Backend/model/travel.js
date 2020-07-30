@@ -22,14 +22,14 @@ var travelDB = {
         });
     },
 
-    getTravelsOne: function (id, callback) {
+    getTravelsSearch: function (country,price,period,callback) {
         var conn = db.getConnection();
         conn.connect(function (err) {
             if (err) {
                 return callback(err, null);
             }
             else {
-                var sql = 'SELECT * FROM travel WHERE travelid = ?';
+                var sql = 'SELECT * FROM travel WHERE country=? AND period=?';
                 conn.query(sql, [id], function (err, result) {
                     conn.end();
                     if (err) {

@@ -24,66 +24,35 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
         const urlParams = new URLSearchParams(window.location.search);
-        const travelid = urlParams.get('travelid');
+        const country = urlParams.get('country');
+        const price = urlParams.get('price');
+        const period = urlParams.get('period')
         // API url
         const baseUrl = "http://localhost:8081";
-        // hardcoded because we have not added login yet.
-        // const loggedInUserID = 1;
 
-
-        axios.all([axios.get(`${baseUrl}/travel/${travelid}/itinerary`),
-        axios.get(`${baseUrl}/travel/${travelid}`)])
-            .then(axios.spread((firstResponse, secondResponse, thirdResponse) => {
-                const days = firstResponse.data;
-                days.forEach((day) => {
-                    const dayHtml = `
+        axios.get(`${baseUrl}/search`)
+            .then((response) => {
+                const travels = response.data;
+                travels.forEach((record) => {
+                    const recordHtml = `
                 <div class="col-4 card" style="margin-top: 2rem;">
                     <div class="card-body">
-                       <b><p class="card-title">Day ${day.day}</p></b>
-                       <p class="card-activity"><b>Activity:</b><br>${day.activity}</p>
+                       <b><p class="card-title">${record.title}</p></b>
+                       <p class="card-price"><b>Price:</b> $${record.price}</p>
+                       <p class="card-period"><b>Departure date:</b><br>${record.travelPeriod}</p>
+                       <p class="card-country"><b>Country:</b> ${record.country}</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="/itinerary.html?travelid=${record.travelid}">View Itinerary<a/>
                     </div>
                 </div>
                 `;
-                    $("#days").append(dayHtml);
+                    $("#travels").append(recordHtml);
                 });
-                const travels = secondResponse.data;
-                console.log(travels)
-                const descHtml = `<h3 class="desc">${travels[0].description}</h3>`;
-                console.log(descHtml)
-                $("#page-title").append(descHtml);
-            }))
-            .catch(error => console.log(error));
-        //DISPLAYS DAYS
-        // axios.get(`${baseUrl}/travel/${travelid}/itinerary`)
-        //     .then((response) => {
-        //         const days = response.data;
-        //         days.forEach((day) => {
-        //             const dayHtml = `
-        //         <div class="col-4 card" style="margin-top: 2rem;">
-        //             <div class="card-body">
-        //                <b><p class="card-title">Day ${day.day}</p></b>
-        //                <p class="card-activity"><b>Activity:</b><br>${day.activity}</p>
-        //             </div>
-        //         </div>
-        //         `;
-        //             $("#days").append(dayHtml);
-        //         });
-        //     })
-        //     .catch((error) => {
-        //         console.log(error);
-        //     });
-
-        // // DISPLAYS DESCRIPTION   
-        // axios.get(`${baseUrl}/travel/${travelid}`)
-        //     .then((response) => {
-        //         const travels = response.data;
-        //         console.log(travels)
-        //         const descHtml = `<h2 class="desc"> ${travels.description} </h2>`
-        //         $("#page-title").insertAfter(descHtml)
-        //     })
-        //     .catch((error) => {
-        //         console.log(error);
-        //     });
+            })
+            .catch((error) => {
+                console.log(error);
+            });
 
     </script>
 
@@ -94,16 +63,7 @@
         </nav>
 
         <div style="margin-top: 2rem;">
-            <h1 id="page-title">Itinerary</h1>
-
-            <!-- <form id="create-post-form" style="margin-top: 2rem;">
-                <div class="form-group">
-                    <textarea class="form-control" id="create-post-form-body" rows="3"
-                        placeholder="What's on your mind?"></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Create Post</button>
-            </form> -->
-
+            <h1 id="page-title">Search Results</h1>
             <div class="container">
                 <div id="days" class="row no-gutters">
                 </div>

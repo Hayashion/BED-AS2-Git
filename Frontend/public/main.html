@@ -63,39 +63,31 @@
         <div style="margin-top: 2rem;margin-bottom: 2rem;">
             <h1>Travel Destinations</h1>
 
-            <form action="/search.html?${}">
-                <div class="single-element-widget mt-30">
-                    <h3 class="mb-30">Search Tour Packages</h3>
-                    <div class="default-select" id="default-select"">
-                        <select>
-                        <option value=" 1">English</option>
-                        <option value="1">Spanish</option>
-                        <option value="1">Arabic</option>
-                        <option value="1">Portuguise</option>
-                        <option value="1">Bengali</option>
-                        </select>
-                    </div>
-                    <div class="default-select" id="default-select"">
-                        <select>
-                        <option value=" 1">English</option>
-                        <option value="1">Spanish</option>
-                        <option value="1">Arabic</option>
-                        <option value="1">Portuguise</option>
-                        <option value="1">Bengali</option>
-                        </select>
-                    </div>
-                    <div class="default-select" id="default-select"">
-                        <select>
-                        <option value="1">English</option>
-                        <option value="1">Spanish</option>
-                        <option value="1">Arabic</option>
-                        <option value="1">Portuguise</option>
-                        <option value="1">Bengali</option>
-                        </select>
-                    </div>
-                    <input type="submit" value="Search">
-                </div>
-            </form>
+            <h3 class="mb-30">Search Tour Packages</h3>
+            <form action="/search.html">
+                <label for="country">Country:</label>
+                <select id="country" name="country">
+                    <option value="volvo">Volvo</option>
+                    <option value="saab">Saab</option>
+                    <option value="fiat">Fiat</option>
+                    <option value="audi">Audi</option>
+                </select>
+                <label for="price">Maximum Price:</label>
+                <select id="price" name="price">
+                    <option value="volvo">Volvo</option>
+                    <option value="saab">Saab</option>
+                    <option value="fiat">Fiat</option>
+                    <option value="audi">Audi</option>
+                </select>
+                <label for="period">Travel Period</label>
+                <select id="period" name="price">
+                    <option value="Mar 2021">Volvo</option>
+                    <option value="saab">Saab</option>
+                    <option value="fiat">Fiat</option>
+                    <option value="audi">Audi</option>
+                </select>
+                <input type="submit">
+            </form> 
 
             <div class="container">
                 <div id="travels" class="row no-gutters">

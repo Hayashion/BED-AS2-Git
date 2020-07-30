@@ -14,6 +14,44 @@ app.use(urlencodedParser);
 const cors = require("cors");
 app.use(cors());
 
+//  NEW API
+app.get('/travel/:id', function (req, res) {
+
+    var id = req.params.id;
+
+    travelDB.getTravelsOne(id, function (err, result) {
+         res.type('json');
+         if (err) {
+            
+             res.status(500);
+             res.send(`{"message":"Internal Server Error"}`);
+         } else {
+             res.status(200);
+             res.send(result);
+         }
+     });
+ });
+
+ app.get('/search/', function (req, res) {
+
+    var country = req.query.country;
+    var price = req.query.price;
+    var period = req.query.period;
+
+    travelDB.getTravelsSearch(country,price,period, function (err, result) {
+         res.type('json');
+         if (err) {           
+             res.status(500);
+             res.send(`{"message":"Internal Server Error"}`);
+         } else {
+             res.status(200);
+             res.send(result);
+         }
+     });
+ });
+
+
+
 // Q1
 app.get('/users', function (req, res) {
 
@@ -98,24 +136,6 @@ app.get('/users/:id', function (req, res) {
 app.get('/travel', function (req, res) {
 
     travelDB.getTravels(function (err, result) {
-         res.type('json');
-         if (err) {
-            
-             res.status(500);
-             res.send(`{"message":"Internal Server Error"}`);
-         } else {
-             res.status(200);
-             res.send(result);
-         }
-     });
- });
-
-//  NEW API
- app.get('/travel/:id', function (req, res) {
-
-    var id = req.params.id;
-
-    travelDB.getTravelsOne(id, function (err, result) {
          res.type('json');
          if (err) {
             
