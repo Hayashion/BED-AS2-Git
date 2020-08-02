@@ -61,25 +61,6 @@
 </head>
 
 <body>
-	<!-- Redirect to Login if not logged in or admin -->
-	<script defer>
-        const token = localStorage.getItem("token");
-        const userRole= localStorage.getItem("userRole");
-        if (token === null || userRole != "admin") {
-            window.location.href = "login.html";
-		}
-		if (userRole === "admin"){
-			$("header-bar").append(`<li><a href="admin.html">Admin</a></li>`)
-		}
-	</script>
-	<script>
-		function logout(){
-			localStorage.removeItem("token");
-			localStorage.removeItem("loggedInUserID");
-			localStorage.removeItem("userRole");
-			window.location.replace("login.html");
-		};
-	</script>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"
 		integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
@@ -89,45 +70,59 @@
 		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 		crossorigin="anonymous"></script>
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<!-- Redirect to Login if not logged in or admin -->
+	<script>
+		const token = localStorage.getItem("token");
+		const userRole = localStorage.getItem("userRole");
+		if (token === null || userRole != "admin") {
+			window.location.href = "login.html";
+		}
+		if (userRole === "admin") {
+			$("header-bar").append(`<li><a href="admin.html">Admin</a></li>`)
+		}
+	</script>
+	<script>
+		function logout() {
+			localStorage.removeItem("token");
+			localStorage.removeItem("loggedInUserID");
+			localStorage.removeItem("userRole");
+			window.location.replace("login.html");
+		};
+	</script>
 
 
 	<div class="gtco-loader"></div>
 
 	<div id="page">
-		<script>
-			// API url
-			const baseUrl = "http://localhost:8081";
-
-		</script>
 
 		<!-- <div class="page-inner"> -->
-			<nav class="gtco-nav" role="navigation">
-				<div class="gtco-container">
-	
-					<div class="row">
-						<div class="col-sm-4 col-xs-12">
-							<div id="gtco-logo"><a href="index.html">sptravel <em>.</em></a></div>
-						</div>
-						<div class="col-xs-8 text-right menu-1">
-							<ul id="header-bar">
-								<li><a href="destination.html">Destination</a></li>
-								<li class="has-dropdown">
-									<a href="#">Travel</a>
-									<ul class="dropdown">
-										<li><a href="#">Europe</a></li>
-										<li><a href="#">Asia</a></li>
-										<li><a href="#">America</a></li>
-										<li><a href="#">Canada</a></li>
-									</ul>
-								</li>
-								<li><a href="pricing.html">Pricing</a></li>
-								<li><a href="" onclick="logout()">Logout</a></li>
-							</ul>
-						</div>
+		<nav class="gtco-nav" role="navigation">
+			<div class="gtco-container">
+
+				<div class="row">
+					<div class="col-sm-4 col-xs-12">
+						<div id="gtco-logo"><a href="index.html">sptravel <em>.</em></a></div>
 					</div>
-	
+					<div class="col-xs-8 text-right menu-1">
+						<ul id="header-bar">
+							<li><a href="destination.html">Destination</a></li>
+							<li class="has-dropdown">
+								<a href="#">Travel</a>
+								<ul class="dropdown">
+									<li><a href="#">Europe</a></li>
+									<li><a href="#">Asia</a></li>
+									<li><a href="#">America</a></li>
+									<li><a href="#">Canada</a></li>
+								</ul>
+							</li>
+							<li><a href="pricing.html">Pricing</a></li>
+							<li><a href="" onclick="logout()">Logout</a></li>
+						</ul>
+					</div>
 				</div>
-			</nav>
+
+			</div>
+		</nav>
 
 		<header id="gtco-header" class="gtco-cover gtco-cover-sm" role="banner"
 			style="background-image: url(images/img_6.jpg)">
@@ -152,47 +147,151 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="col-md-12 animate-box">
-						<h3>Add New Travel Listing</h3>
-						<form action="#" method="">
-							<div class="row form-group">
-								<div class="col-md-12">
-									Title
-									<label class="sr-only" for="title">Title</label>
-									<input type="text" id="title" class="form-control" placeholder="Title Of Listing (eg. 5N4N Jakarta)">
-								</div>
-								
-							</div>
+							<h3>Add New Travel Listing</h3>
+							<form id="formlisting">
+								<div class="row form-group">
+									<div class="col-md-12">
+										Title
+										<label class="sr-only" for="title">Title</label>
+										<input type="text" id="title" class="form-control"
+											placeholder="Title Of Listing (eg. 5N4N Jakarta)" required>
+									</div>
 
-							<div class="row form-group">
-								<div class="col-md-12">
-									Price
-									<label class="sr-only" for="price">Price</label>
-									<input type="text" id="price" class="form-control" placeholder="Price (Omit $)">
 								</div>
-							</div>
-	
-							<div class="row form-group">
-								<div class="col-md-12">
-									Country
-									<label class="sr-only" for="subject">Country</label>
-									<input type="text" id="subject" class="form-control" placeholder="Country">
+
+								<div class="row form-group">
+									<div class="col-md-12">
+										Price
+										<label class="sr-only" for="price">Price</label>
+										<input type="text" id="price" class="form-control" placeholder="Price (Omit $)"
+											required>
+									</div>
 								</div>
-							</div>
-	
-							<div class="row form-group">
-								<div class="col-md-12">
-									Period
-									<label class="sr-only" for="message">Message</label>
-									<textarea name="message" id="message" cols="30" rows="10" class="form-control" placeholder="Write us something"></textarea>
+
+								<div class="row form-group">
+									<div class="col-md-12">
+										Country
+										<label class="sr-only" for="country">Country</label>
+										<input type="text" id="country" class="form-control" placeholder="Country"
+											required>
+									</div>
 								</div>
-							</div>
-							<div class="form-group">
-								<input type="submit" value="Send Message" class="btn btn-primary">
-							</div>
-	
-						</form>		
-					</div>
-					</div>
+
+								<div class="row form-group">
+									<div class="col-md-12">
+										Period
+										<label class="sr-only" for="period">Period</label>
+										<input name="period" id="period" class="form-control"
+											placeholder="MMM-YYYY (eg. Sep 2020)" required>
+									</div>
+								</div>
+
+								<div class="row form-group">
+									<div class="col-md-12">
+										Description
+										<label class="sr-only" for="description">Description</label>
+										<textarea name="description" id="description" class="form-control" cols="30"
+											rows="10" placeholder="Description" required></textarea>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<input type="submit" value="Add Listing" class="btn btn-primary">
+								</div>
+							</form>
+							<script>
+								const baseUrl = "http://localhost:8081";
+								$("#formlisting").submit((event) => {
+									event.preventDefault();
+									const titled = $("#title").val();
+									const priced = $("#price").val();
+									const periodd = $("#period").val();
+									const descriptiond = $("#description").val();
+									const countryd = $("#country").val();
+									axios.post(`${baseUrl}/travel`, {
+										title: titled,
+										price: priced,
+										travelPeriod: periodd,
+										description: descriptiond,
+										country: countryd
+									})
+										.then(function (response) {
+											var data = response.data
+											if (response.status==201){
+												var msgalt = "Successfully Added! travelid:"+data.travelid.toString();
+												window.alert(msgalt);
+												console.log(data.travelid);
+											} 
+										})
+										.catch(function (error) {
+											console.log(error);
+										});
+
+									return false;
+								});
+							</script>
+						</div>
+					</div> <!--end of addlisting form-->
+					<!-- Start of Itinerary form  -->
+					<!-- <div class="col-md-12">
+						<div class="col-md-12 animate-box">
+							<h3>Add New Itinerary Listing</h3>
+							<form id="formiti">
+								<div class="row form-group">
+									<div class="col-md-12">
+										Title
+										<label class="sr-only" for="day">Title</label>
+										<input type="text" id="title" class="form-control"
+											placeholder="Title Of Listing (eg. 5N4N Jakarta)" required>
+									</div>
+
+								</div>
+								<div class="row form-group">
+									<div class="col-md-12">
+										Description
+										<label class="sr-only" for="description">Description</label>
+										<textarea name="description" id="description" class="form-control" cols="30"
+											rows="10" placeholder="Description" required></textarea>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<input type="submit" value="Add Listing" class="btn btn-primary">
+								</div>
+							</form>
+							<script>
+								const baseUrl = "http://localhost:8081";
+								$("#formlisting").submit((event) => {
+									event.preventDefault();
+									const titled = $("#title").val();
+									const priced = $("#price").val();
+									const periodd = $("#period").val();
+									const descriptiond = $("#description").val();
+									const countryd = $("#country").val();
+									axios.post(`${baseUrl}/travel`, {
+										title: titled,
+										price: priced,
+										travelPeriod: periodd,
+										description: descriptiond,
+										country: countryd
+									})
+										.then(function (response) {
+											var data = response.data
+											if (response.status==201){
+												var msgalt = "Successfully Added! travelid:"+data.travelid.toString();
+												window.alert(msgalt);
+												console.log(data.travelid);
+											} 
+										})
+										.catch(function (error) {
+											console.log(error);
+										});
+
+									return false;
+								});
+							</script>
+						</div>
+					</div> -->
 				</div>
 			</div>
 		</div>

@@ -189,12 +189,13 @@ app.get('/travel', function (req, res) {
 
  // Q6
  app.post('/travel', function (req, res) {
-
+    console.log(req)
     var title = req.body.title;
     var desc = req.body.description;
     var price = req.body.price;
     var country = req.body.country;
     var period = req.body.travelPeriod;
+    console.log(title,price,desc,price,country,period)
 
     travelDB.insertTravel(title,desc,price,country,period, function (err, result) {
         res.type('json');
@@ -204,7 +205,7 @@ app.get('/travel', function (req, res) {
             res.send(`{"message":"Internal Server Error"}`);
         } else {
             res.status(201);
-            res.send(`{"travelid:${result.insertId}"}`);
+            res.json({travelid:result.insertId});
         }
     });
 });
