@@ -4,6 +4,10 @@ var travelDB = require('../model/travel.js');
 var itineraryDB = require('../model/itinerary.js');
 var reviewDB = require('../model/review.js');
 
+const jwt = require("jsonwebtoken");
+const JWT_SECRET = require("../config.js"); 
+
+
 var app=express();
 var bodyParser=require('body-parser');
 var urlencodedParser=bodyParser.urlencoded({extended:false});
@@ -37,7 +41,7 @@ app.get('/travel/:id', function (req, res) {
     var country = req.query.country;
     var price = req.query.price;
     var period = req.query.period;
-    
+
     travelDB.getTravelsSearch(country,price,period, function (err, result) {
          res.type('json');
          if (err) {           
@@ -49,6 +53,41 @@ app.get('/travel/:id', function (req, res) {
          }
      });
  });
+
+ app.post("/login/", (req, res) => {
+    userDB.verify(
+      req.body.email,
+      req.body.password,
+      (error, user) => {
+        if (error) {
+            console.log(error)
+          next(error);
+          return;
+        }
+        if (user === null) {
+          res.status(401).send();
+          return;
+        }
+        const payload = { user_id: user.userid };
+        jwt.sign(payload, JWT_SECRET.key, { algorithm: "HS256" }, (error, token) => {
+          if (error) {
+            console.log(error);
+            res.status(401).send();
+            return;
+          } 
+          console.log({
+            token: token,
+            user_id: user.userid
+          })
+          res.status(200).send({
+            token: token,
+            user_id: user.userid,
+            role: user.role
+          });
+        })
+    });
+  });
+  
 
 
 

@@ -8,9 +8,18 @@
     <title>JW Travel</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
 </head>
 
 <body>
+    <script>
+        const token = localStorage.getItem("token");
+        const loggedInUserID = parseInt(localStorage.getItem("loggedInUserID"));
+
+        if (token === null || isNaN(loggedInUserID)) {
+            window.location.href = "index.html";
+        }
+    </script>
     <div class="container">
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -84,7 +93,7 @@
                     <option value="audi">Audi</option>
                 </select>
                 <input type="submit">
-            </form> 
+            </form>
 
             <div class="container">
                 <div id="travels" class="row no-gutters">

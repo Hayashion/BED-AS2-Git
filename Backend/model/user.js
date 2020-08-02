@@ -1,6 +1,33 @@
 var db = require('./databaseConfig.js');
 var userDB={
 
+    //NEW API
+    verify: function (email,password,callback) {
+        var conn = db.getConnection();
+        conn.connect(function (err) {
+            if (err) {
+                return callback(err, null);
+            }
+            else {
+                const query = "SELECT * FROM user WHERE email=? and password=?";
+                conn.query(query, [email,password], (error, results) => {
+                    if (error) {
+                        callback(error, null);
+                        return;
+                    }
+                    if (results.length === 0) {
+                        callback(null, null);
+                        return;
+                    }else{
+                    const user = results[0];
+                    callback(null, user);
+                    }       
+                });
+            }
+        });
+    },
+
+
     // Q1
     getUsers: function (callback) {
         var conn = db.getConnection();
