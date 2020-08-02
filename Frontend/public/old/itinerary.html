@@ -49,37 +49,6 @@
                 $("#page-title").append(descHtml);
             }))
             .catch(error => console.log(error));
-        //DISPLAYS DAYS
-        // axios.get(`${baseUrl}/travel/${travelid}/itinerary`)
-        //     .then((response) => {
-        //         const days = response.data;
-        //         days.forEach((day) => {
-        //             const dayHtml = `
-        //         <div class="col-4 card" style="margin-top: 2rem;">
-        //             <div class="card-body">
-        //                <b><p class="card-title">Day ${day.day}</p></b>
-        //                <p class="card-activity"><b>Activity:</b><br>${day.activity}</p>
-        //             </div>
-        //         </div>
-        //         `;
-        //             $("#days").append(dayHtml);
-        //         });
-        //     })
-        //     .catch((error) => {
-        //         console.log(error);
-        //     });
-
-        // // DISPLAYS DESCRIPTION   
-        // axios.get(`${baseUrl}/travel/${travelid}`)
-        //     .then((response) => {
-        //         const travels = response.data;
-        //         console.log(travels)
-        //         const descHtml = `<h2 class="desc"> ${travels.description} </h2>`
-        //         $("#page-title").insertAfter(descHtml)
-        //     })
-        //     .catch((error) => {
-        //         console.log(error);
-        //     });
 
     </script>
 

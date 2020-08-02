@@ -23,6 +23,13 @@
         crossorigin="anonymous"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
+        const token = localStorage.getItem("token");
+        const loggedInUserID = parseInt(localStorage.getItem("loggedInUserID"));
+        if (token === null || isNaN(loggedInUserID)) {
+            window.location.href = "login.html";
+        }
+    </script>
+    <script>
         const urlParams = new URLSearchParams(window.location.search);
         const country = urlParams.get('country');
         const price = urlParams.get('price');
@@ -33,22 +40,30 @@
         axios.get(`${baseUrl}/search`, { params: { country: country, price: price, period: period } })
             .then((response) => {
                 const travels = response.data;
-                console.log(travels)
+                console.log(travels);
+                for (i=0;i<travels.length;i++){
+                    if (travels[i].price>price){
+                        travels[i].splice(i,1);
+                    } 
+                }
+                console.log("hAHA");
                 travels.forEach((record) => {
-                    const recordHtml = `
-                <div class="col-4 card" style="margin-top: 2rem;">
-                    <div class="card-body">
-                       <b><p class="card-title">${record.title}</p></b>
-                       <p class="card-price"><b>Price:</b> $${record.price}</p>
-                       <p class="card-period"><b>Departure date:</b><br>${record.travelPeriod}</p>
-                       <p class="card-country"><b>Country:</b> ${record.country}</p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="/itinerary.html?travelid=${record.travelid}">View Itinerary<a/>
-                    </div>
-                </div>
-                `;
+                        const recordHtml = `
+                        <div class="col-4 card" style="margin-top: 2rem;">
+                            <div class="card-body">
+                            <b><p class="card-title">${record.title}</p></b>
+                            <p class="card-price"><b>Price:</b> $${record.price}</p>
+                            <p class="card-period"><b>Departure date:</b><br>${record.travelPeriod}</p>
+                            <p class="card-country"><b>Country:</b> ${record.country}</p>
+                            </div>
+                            <div class="card-footer">
+                                <a href="/itinerary.html?travelid=${record.travelid}">View Itinerary<a/>
+                            </div>
+                        </div>
+                        `;
                     $("#search").append(recordHtml);
+                    console.log($record.price,price)
+                
                 });
             })
             .catch((error) => {
@@ -64,7 +79,7 @@
         </nav>
 
         <div style="margin-top: 2rem;">
-            <h1 id="page-title">Search Results</h1>
+            <h1 id="page-title">Search Reesults</h1>
             <div class="container">
                 <div id="search" class="row no-gutters">
                 </div>

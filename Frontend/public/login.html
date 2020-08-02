@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <!--
-	Traveler by freehtml5.co
+	SPTravel by freehtml5.co
 	Twitter: http://twitter.com/fh5co
 	URL: http://freehtml5.co
 -->
@@ -9,7 +9,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Traveler &mdash; Free Website Template, Free HTML5 Template by FreeHTML5.co</title>
+	<title>SPTravel </title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Free HTML5 Website Template by FreeHTML5.co" />
 	<meta name="keywords"
@@ -61,13 +61,16 @@
 </head>
 
 <body>
+	<!-- Redirect to main.html if logged in -->
 	<script>
-        const token = localStorage.getItem("token");
-        const loggedInUserID = parseInt(localStorage.getItem("loggedInUserID"));
-        if (token !== null || isNaN(loggedInUserID)) {
-            window.location.href = "index.html";
-        }
-    </script>
+		const tokenc = localStorage.getItem("token");
+		const loggedInUserIDc = parseInt(localStorage.getItem("loggedInUserID"));
+		
+		if (tokenc !== null) {
+			window.location.href = "index.html";
+		}
+	</script>
+	
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"
 		integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
@@ -84,34 +87,21 @@
 
 
 		<!-- <div class="page-inner"> -->
-		<nav class="gtco-nav" role="navigation">
-			<div class="gtco-container">
-
-				<div class="row">
-					<div class="col-sm-4 col-xs-12">
-						<div id="gtco-logo"><a href="index.html">sptravel <em>.</em></a></div>
+			<nav class="gtco-nav" role="navigation">
+				<div class="gtco-container">
+	
+					<div class="row">
+						<div class="col-sm-4 col-xs-12">
+							<div id="gtco-logo"><a href="index.html">sptravel <em>.</em></a></div>
+						</div>
+						<div class="col-xs-8 text-right menu-1">
+							
+						</div>
 					</div>
-					<div class="col-xs-8 text-right menu-1">
-						<ul>
-							<li><a href="destination.html">Destination</a></li>
-							<li class="has-dropdown">
-								<a href="#">Travel</a>
-								<ul class="dropdown">
-									<li><a href="#">Europe</a></li>
-									<li><a href="#">Asia</a></li>
-									<li><a href="#">America</a></li>
-									<li><a href="#">Canada</a></li>
-								</ul>
-							</li>
-							<li><a href="pricing.html">Pricing</a></li>
-							<li><a href="contact.html">Contact</a></li>
-						</ul>
-					</div>
+	
 				</div>
+			</nav>
 
-			</div>
-		</nav>
-		
 
 		<header id="gtco-header" class="gtco-cover gtco-cover-md" role="banner"
 			style="background-image: url(images/img_bg_2.jpg)">
@@ -133,17 +123,19 @@
 													<div class="row form-group">
 														<div class="col-md-12">
 															<label for="destination">Email</label>
-															<input type ="email" id="email" class="form-control" placeholder="example@abc.com" >
+															<input type="email" id="email" class="form-control"
+																placeholder="example@abc.com">
 														</div>
 													</div>
 													<div class="row form-group">
 														<div class="col-md-12">
 															<label for="price">Password</label>
-															<input type ="password" id="password" class="form-control" placeholder="Password" >
+															<input type="password" id="password" class="form-control"
+																placeholder="Password">
 														</div>
 													</div>
-										
-													<div class="row form-group">
+
+													<div id="loginbtn" class="row form-group">
 														<div class="col-md-12">
 															<input type="submit" class="btn btn-primary btn-block"
 																value="Login">
@@ -181,17 +173,19 @@
 						const token = response.data.token;
 						const loggedInUserID = response.data.user_id;
 						const userRole = response.data.role;
-						console.log(token,loggedInUserID)
+						console.log(token, loggedInUserID)
 						localStorage.setItem("token", token);
 						localStorage.setItem("loggedInUserID", loggedInUserID);
 						localStorage.setItem("userRole", userRole);
 						window.location.replace("index.html");
 					})
 					.catch((error) => {
-						console.log(error);
+						if(error.response.status==401){
+							window.alert("Wrong email or password!")
+						}
 					});
-					return false;
-				});
+				return false;
+			});
 		</script>
 		<div id="gtco-features">
 			<div class="gtco-container">
@@ -284,7 +278,7 @@
 						<div class="feature-center">
 							<span class="counter js-counter" data-from="0" data-to="12402" data-speed="5000"
 								data-refresh-interval="50">1</span>
-							<span class="counter-label">Travelers</span>
+							<span class="counter-label">SPTravels</span>
 						</div>
 					</div>
 					<div class="col-md-3 col-sm-6 animate-box" data-animate-effect="fadeInUp">
@@ -430,7 +424,7 @@
 	<script src="js/magnific-popup-options.js"></script>
 
 	<!-- Datepicker -->
-	<!-- <script src="js/bootstrap-datepicker.min.js"></script> -->
+	<script src="js/bootstrap-datepicker.min.js"></script>
 
 
 	<!-- Main -->

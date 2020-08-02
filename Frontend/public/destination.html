@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <!--
-	Traveler by freehtml5.co
+	SPTravel by freehtml5.co
 	Twitter: http://twitter.com/fh5co
 	URL: http://freehtml5.co
 -->
@@ -8,7 +8,7 @@
 	<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Traveler &mdash; Free Website Template, Free HTML5 Template by FreeHTML5.co</title>
+	<title>SPTravel </title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Free HTML5 Website Template by FreeHTML5.co" />
 	<meta name="keywords" content="free website templates, free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
@@ -58,40 +58,59 @@
 
 	</head>
 	<body>
-		
+	<!-- Redirect to Login if not logged in -->
+	<script>
+        const token = localStorage.getItem("token");
+		const loggedInUserID = parseInt(localStorage.getItem("loggedInUserID"));
+		const userRole= localStorage.getItem("userRole");
+        if (token === null || isNaN(loggedInUserID)) {
+            window.location.href = "login.html";
+		}
+		if (userRole === "admin"){
+			$("header-bar").append(`<li><a href="admin.html">Admin</a></li>`)
+		}
+	</script>	
+	<script>
+		function logout(){
+			localStorage.removeItem("token");
+			localStorage.removeItem("loggedInUserID");
+			localStorage.removeItem("userRole");
+			window.location.replace("login.html");
+		};
+	</script>
 	<div class="gtco-loader"></div>
 	
 	<div id="page">
 
 	
 	<!-- <div class="page-inner"> -->
-	<nav class="gtco-nav" role="navigation">
-		<div class="gtco-container">
-			
-			<div class="row">
-				<div class="col-sm-4 col-xs-12">
-					<div id="gtco-logo"><a href="index.html">Traveler <em>.</em></a></div>
+		<nav class="gtco-nav" role="navigation">
+			<div class="gtco-container">
+
+				<div class="row">
+					<div class="col-sm-4 col-xs-12">
+						<div id="gtco-logo"><a href="index.html">sptravel <em>.</em></a></div>
+					</div>
+					<div class="col-xs-8 text-right menu-1">
+						<ul id="header-bar">
+							<li><a href="destination.html">Destination</a></li>
+							<li class="has-dropdown">
+								<a href="#">Travel</a>
+								<ul class="dropdown">
+									<li><a href="#">Europe</a></li>
+									<li><a href="#">Asia</a></li>
+									<li><a href="#">America</a></li>
+									<li><a href="#">Canada</a></li>
+								</ul>
+							</li>
+							<li><a href="pricing.html">Pricing</a></li>
+							<li><a href="" onclick="logout()">Logout</a></li>
+						</ul>
+					</div>
 				</div>
-				<div class="col-xs-8 text-right menu-1">
-					<ul>
-						<li class="active"><a href="destination.html">Destination</a></li>
-						<li class="has-dropdown">
-							<a href="#">Travel</a>
-							<ul class="dropdown">
-								<li><a href="#">Europe</a></li>
-								<li><a href="#">Asia</a></li>
-								<li><a href="#">America</a></li>
-								<li><a href="#">Canada</a></li>
-							</ul>
-						</li>
-						<li><a href="pricing.html">Pricing</a></li>
-						<li><a href="contact.html">Contact</a></li>
-					</ul>	
-				</div>
+
 			</div>
-			
-		</div>
-	</nav>
+		</nav>
 	
 	<header id="gtco-header" class="gtco-cover gtco-cover-sm" role="banner" style="background-image: url(images/img_6.jpg)">
 		<div class="overlay"></div>
