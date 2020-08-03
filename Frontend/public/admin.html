@@ -72,6 +72,7 @@
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<!-- Redirect to Login if not logged in or admin -->
 	<script>
+		const baseUrl = "http://localhost:8081";
 		const token = localStorage.getItem("token");
 		const userRole = localStorage.getItem("userRole");
 		if (token === null || userRole != "admin") {
@@ -80,8 +81,6 @@
 		if (userRole === "admin") {
 			$("header-bar").append(`<li><a href="admin.html">Admin</a></li>`)
 		}
-	</script>
-	<script>
 		function logout() {
 			localStorage.removeItem("token");
 			localStorage.removeItem("loggedInUserID");
@@ -199,99 +198,49 @@
 									<input type="submit" value="Add Listing" class="btn btn-primary">
 								</div>
 							</form>
-							<script>
-								const baseUrl = "http://localhost:8081";
-								$("#formlisting").submit((event) => {
-									event.preventDefault();
-									const titled = $("#title").val();
-									const priced = $("#price").val();
-									const periodd = $("#period").val();
-									const descriptiond = $("#description").val();
-									const countryd = $("#country").val();
-									axios.post(`${baseUrl}/travel`, {
-										title: titled,
-										price: priced,
-										travelPeriod: periodd,
-										description: descriptiond,
-										country: countryd
-									})
-										.then(function (response) {
-											var data = response.data
-											if (response.status==201){
-												var msgalt = "Successfully Added! travelid:"+data.travelid.toString();
-												window.alert(msgalt);
-												console.log(data.travelid);
-											} 
-										})
-										.catch(function (error) {
-											console.log(error);
-										});
-
-									return false;
-								});
-							</script>
 						</div>
-					</div> <!--end of addlisting form-->
+					</div>
+					<!--end of addlisting form-->
 					<!-- Start of Itinerary form  -->
-					<!-- <div class="col-md-12">
+					<div class="col-md-12">
 						<div class="col-md-12 animate-box">
 							<h3>Add New Itinerary Listing</h3>
 							<form id="formiti">
 								<div class="row form-group">
-									<div class="col-md-12">
-										Title
-										<label class="sr-only" for="day">Title</label>
-										<input type="text" id="title" class="form-control"
-											placeholder="Title Of Listing (eg. 5N4N Jakarta)" required>
-									</div>
+									<div class="col-md-8">
+										<label for="listname">Title of Travel Listing</label>
+										<select name="listname" id="listname" class="form-control" required>
 
+										</select>
+									</div>
+									<div class="col-md-3">
+										<label for="">Check The Current Itinerary</label>
+										<input type="button" value="Check current itinerary" class="btn btn-primary"
+											onclick="return redirectiti()">
+									</div>
 								</div>
 								<div class="row form-group">
 									<div class="col-md-12">
-										Description
-										<label class="sr-only" for="description">Description</label>
-										<textarea name="description" id="description" class="form-control" cols="30"
+										Day
+										<label class="sr-only" for="day">Day</label>
+										<input type="text" id="day" class="form-control"
+											placeholder="Day of Activity (eg. 3)" required>
+									</div>
+								</div>
+								<div class="row form-group">
+									<div class="col-md-12">
+										Activity
+										<label class="sr-only" for="description">Activity</label>
+										<textarea name="descriptioni" id="descriptioni" class="form-control" cols="30"
 											rows="10" placeholder="Description" required></textarea>
 									</div>
 								</div>
-
 								<div class="form-group">
 									<input type="submit" value="Add Listing" class="btn btn-primary">
 								</div>
 							</form>
-							<script>
-								const baseUrl = "http://localhost:8081";
-								$("#formlisting").submit((event) => {
-									event.preventDefault();
-									const titled = $("#title").val();
-									const priced = $("#price").val();
-									const periodd = $("#period").val();
-									const descriptiond = $("#description").val();
-									const countryd = $("#country").val();
-									axios.post(`${baseUrl}/travel`, {
-										title: titled,
-										price: priced,
-										travelPeriod: periodd,
-										description: descriptiond,
-										country: countryd
-									})
-										.then(function (response) {
-											var data = response.data
-											if (response.status==201){
-												var msgalt = "Successfully Added! travelid:"+data.travelid.toString();
-												window.alert(msgalt);
-												console.log(data.travelid);
-											} 
-										})
-										.catch(function (error) {
-											console.log(error);
-										});
-
-									return false;
-								});
-							</script>
 						</div>
-					</div> -->
+					</div>
 				</div>
 			</div>
 		</div>
@@ -406,6 +355,87 @@
 
 	<!-- Main -->
 	<script src="js/main.js"></script>
+
+	<!-- Scripts -->
+	<script> // Script for getting travel titles and travelid for itinerary form
+		axios.get(`${baseUrl}/travel`)
+			.then((response) => {
+				const travels = response.data;
+				travels.forEach((record) => {
+					const countHtml = `
+					<option value="${record.travelid}">${record.title}</option>
+				`;
+					$("#listname").append(countHtml);
+				});
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	</script>
+
+	<script> // For adding a new travel listing
+		$("#formlisting").submit((event) => {
+			event.preventDefault();
+			const titled = $("#title").val();
+			const priced = $("#price").val();
+			const periodd = $("#period").val();
+			const descriptiond = $("#description").val();
+			const countryd = $("#country").val();
+			axios.post(`${baseUrl}/travel`, {
+				title: titled,
+				price: priced,
+				travelPeriod: periodd,
+				description: descriptiond,
+				country: countryd
+			})
+				.then(function (response) {
+					var data = response.data
+					if (response.status == 201) {
+						var msgalt = "Successfully Added! travelid:" + data.travelid.toString();
+						window.alert(msgalt);
+						console.log(data.travelid);
+					}
+				})
+				.catch(function (error) {
+					console.log(error);
+				});
+
+			return false;
+		});
+	</script>
+
+	<script> //script for submitting a new itinerary
+		$("#formiti").submit((event) => {
+			event.preventDefault();
+			const titled = $("#listname").val();
+			const descriptiond = $("#descriptioni").val();
+			const day = $("#day").val();
+			axios.post(`${baseUrl}/travel/${titled}/itinerary`, {
+				id: titled,
+				activity: descriptiond,
+				day: day
+			})
+				.then(function (response) {
+					var data = response.data
+					if (response.status == 201) {
+						var msgalt = "Successfully Added Itinerary! id:" + data.travelid.toString();
+						window.alert(msgalt);
+						console.log(data.travelid);
+					}
+				})
+				.catch(function (error) {
+					console.log(error);
+				});
+
+			return false;
+		});
+	</script>
+
+	<script> function redirectiti() { //script for checking the selected listing's itinerary
+			travidval = $("#listname").val();
+			window.open(`http://localhost:3001/itinerary.html?travelid=${travidval}`,'_blank')
+		};
+	</script>
 
 
 </body>
