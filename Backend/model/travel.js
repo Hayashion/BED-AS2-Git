@@ -1,7 +1,9 @@
 var db = require('./databaseConfig.js');
 var travelDB = {
 
-    // NEW API
+    // FUNCTIONS IN USE
+
+    // get one travel listing by ID
     getTravelsOne: function (id, callback) {
         var conn = db.getConnection();
         conn.connect(function (err) {
@@ -22,6 +24,7 @@ var travelDB = {
         });
     },
 
+    // searches and sorts travel listings by search criteria
     getTravelsSearch: function (country,price,period,callback) {
         var conn = db.getConnection();
         conn.connect(function (err) {
@@ -41,8 +44,6 @@ var travelDB = {
             }
         });
     },
-
-
 
     // Q5
     getTravels: function (callback) {
@@ -65,7 +66,7 @@ var travelDB = {
         });
     },
 
-    //Q6
+    // add new travel listing
     insertTravel: function (title, desc, price, country, period, callback) {
         var conn = db.getConnection();
         conn.connect(function (err) {
@@ -86,6 +87,9 @@ var travelDB = {
         });
     },
 
+
+
+    // FUNCTIONS NOT IN USE
     //Q7
     deleteTravel: function (id, callback) {
         var conn = db.getConnection();

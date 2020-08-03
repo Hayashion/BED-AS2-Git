@@ -1,7 +1,12 @@
 var db = require('./databaseConfig.js');
+var jwt=require('jsonwebtoken');
+var config=require('../config');
+
 var userDB={
 
-    //NEW API
+    //Functions in Use
+
+    //login function    
     verify: function (email,password,callback) {
         var conn = db.getConnection();
         conn.connect(function (err) {
@@ -26,9 +31,40 @@ var userDB={
             }
         });
     },
+    //checks token for admin
+    verifyToken: function(req,res,next){
+        console.log(req.headers);
+    
+        var token=req.headers['authorization']; //retrieve authorization header’s content
+        console.log(token);
+    
+        if(!token || !token.includes('Bearer')){ //process the token
+    
+            res.status(403);
+            return res.send({auth:'false',message:'Not authorized!'});
+        }else{
+            token=token.split('Bearer ')[1]; //obtain the token’s value
+            console.log(token);
+            jwt.verify(token,config.key,function(err,decoded){//verify token
+                if (err || decoded.role != "admin"){
+                    res.status(403);
+                    return res.end({auth:false,message:'Not authorized!'});
+                }else{
+                    req.userid=decoded.userid; //decode the userid and store in req for use
+                    req.role=decoded.role; //decode the role and store in req for use
+                    next();
+                }
+    
+            });
+        }
+    
+    },
+    
+    
+    
 
 
-    // Q1
+    // vv Not in use vv
     getUsers: function (callback) {
         var conn = db.getConnection();
         conn.connect(function (err) {

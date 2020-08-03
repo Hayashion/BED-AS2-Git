@@ -195,14 +195,14 @@
 								</div>
 
 								<div class="form-group">
-									<input type="submit" value="Add Listing" class="btn btn-primary">
+									<input type="submit" value="Add Travel Listing" class="btn btn-primary">
 								</div>
 							</form>
 						</div>
 					</div>
 					<!--end of addlisting form-->
 					<!-- Start of Itinerary form  -->
-					<div class="col-md-12">
+					<div class="col-md-12" style="margin-top: 9rem;">
 						<div class="col-md-12 animate-box">
 							<h3>Add New Itinerary Listing</h3>
 							<form id="formiti">
@@ -236,7 +236,7 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<input type="submit" value="Add Listing" class="btn btn-primary">
+									<input type="submit" value="Add Itinerary" class="btn btn-primary">
 								</div>
 							</form>
 						</div>
@@ -387,7 +387,7 @@
 				travelPeriod: periodd,
 				description: descriptiond,
 				country: countryd
-			})
+			}, { headers: { "authorization": "Bearer " + token } })
 				.then(function (response) {
 					var data = response.data
 					if (response.status == 201) {
@@ -414,11 +414,11 @@
 				id: titled,
 				activity: descriptiond,
 				day: day
-			})
+			},{ headers: { "authorization": "Bearer " + token } })
 				.then(function (response) {
 					var data = response.data
 					if (response.status == 201) {
-						var msgalt = "Successfully Added Itinerary! id:" + data.travelid.toString();
+						var msgalt = "Successfully Added Itinerary!";
 						window.alert(msgalt);
 						console.log(data.travelid);
 					}
@@ -433,7 +433,7 @@
 
 	<script> function redirectiti() { //script for checking the selected listing's itinerary
 			travidval = $("#listname").val();
-			window.open(`http://localhost:3001/itinerary.html?travelid=${travidval}`,'_blank')
+			window.open(`http://localhost:3001/itinerary.html?travelid=${travidval}`, '_blank')
 		};
 	</script>
 
