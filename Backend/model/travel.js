@@ -25,7 +25,7 @@ var travelDB = {
     },
 
     // searches and sorts travel listings by search criteria
-    getTravelsSearch: function (country,price,period,callback) {
+    getTravelsSearch: function (country, price, period, callback) {
         var conn = db.getConnection();
         conn.connect(function (err) {
             if (err) {
@@ -33,7 +33,7 @@ var travelDB = {
             }
             else {
                 var sql = 'SELECT * FROM travel WHERE country=? and travelPeriod=?';
-                conn.query(sql, [country,period], function (err, result) {
+                conn.query(sql, [country, period], function (err, result) {
                     conn.end();
                     if (err) {
                         return callback(err, null);
@@ -87,32 +87,8 @@ var travelDB = {
         });
     },
 
-
-
-    // FUNCTIONS NOT IN USE
-    //Q7
-    deleteTravel: function (id, callback) {
-        var conn = db.getConnection();
-        conn.connect(function (err) {
-            if (err) {
-                return callback(err, null);
-            }
-            else {
-                var sql = 'DELETE FROM travel WHERE travelid = ?';
-                conn.query(sql, [id], function (err, result) {
-                    conn.end();
-                    if (err) {
-                        return callback(err, null);
-                    } else {
-                        return callback(null, result);
-                    }
-                });
-            }
-        });
-    },
-
-    //Q8
-    updateTravel: function (id,title, desc, price, country, period, callback) {
+    //Update travel listing.
+    updateTravel: function (id, title, desc, price, country, period, callback) {
         var conn = db.getConnection();
         conn.connect(function (err) {
             if (err) {
@@ -132,5 +108,27 @@ var travelDB = {
         });
     }
 }
+
+// FUNCTIONS NOT IN USE
+//Q7
+deleteTravel: function (id, callback) {
+    var conn = db.getConnection();
+    conn.connect(function (err) {
+        if (err) {
+            return callback(err, null);
+        }
+        else {
+            var sql = 'DELETE FROM travel WHERE travelid = ?';
+            conn.query(sql, [id], function (err, result) {
+                conn.end();
+                if (err) {
+                    return callback(err, null);
+                } else {
+                    return callback(null, result);
+                }
+            });
+        }
+    });
+},
 
 module.exports = travelDB; //Exported as userDB

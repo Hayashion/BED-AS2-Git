@@ -170,7 +170,30 @@ app.post('/travel/:id/itinerary', verifyToken, function (req, res) {
     });
 });
 
+// To update travel listings.
+app.put('/travel/:id', verifyToken, function (req, res) {
 
+    var id = req.params.id;
+    var title = req.body.title;
+    var desc = req.body.description;
+    var price = req.body.price;
+    var country = req.body.country;
+    var period = req.body.travelPeriod;
+
+    travelDB.updateTravel(id, title, desc, price, country, period, function (err, result) {
+
+        res.type('json');
+        if (err) {
+            res.status(500);
+            console.log(err)
+
+            res.send(`{"message":"Internal Server Error"}`);
+        } else {
+            res.status(204);
+            res.send();
+        }
+    });
+});
 
 
 
@@ -188,30 +211,6 @@ app.delete('/travel/:id', function (req, res) {
         if (err) {
 
             res.status(500);
-            res.send(`{"message":"Internal Server Error"}`);
-        } else {
-            res.status(204);
-            res.send();
-        }
-    });
-});
-
-// maybe
-app.put('/travel/:id', function (req, res) {
-
-    var id = req.params.id;
-    var title = req.body.title;
-    var desc = req.body.description;
-    var price = req.body.price;
-    var country = req.body.country;
-    var period = req.body.travelPeriod;
-
-    travelDB.updateTravel(id, title, desc, price, country, period, function (err, result) {
-
-        res.type('json');
-        if (err) {
-            res.status(500);
-
             res.send(`{"message":"Internal Server Error"}`);
         } else {
             res.status(204);

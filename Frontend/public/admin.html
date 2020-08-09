@@ -144,6 +144,7 @@
 		<div class="gtco-section border-bottom">
 			<div class="gtco-container">
 				<div class="row">
+					<!-- Start of Add Listing form  -->
 					<div class="col-md-12">
 						<div class="col-md-12 animate-box">
 							<h3>Add New Travel Listing</h3>
@@ -200,11 +201,12 @@
 							</form>
 						</div>
 					</div>
-					<!--end of addlisting form-->
+					<!--end of Add listing form-->
 					<!-- Start of Itinerary form  -->
 					<div class="col-md-12" style="margin-top: 9rem;">
 						<div class="col-md-12 animate-box">
 							<h3>Add New Itinerary Listing</h3>
+							<p>Choose listing and check the itinerary all in one place.</p>
 							<form id="formiti">
 								<div class="row form-group">
 									<div class="col-md-8">
@@ -240,6 +242,87 @@
 								</div>
 							</form>
 						</div>
+					</div>
+					<!-- End of Itinereary Form -->
+					<!-- Start of Update Listing form  -->
+					<div class="col-md-12 animate-box" style="margin-top: 9rem;">
+						<h3>Update Travel Listing</h3>
+						<p>Choose a Listing, then click retrieve, otherwise the update function will not work! Empty fields are allowed, the current value in the database will be taken.</p>
+						<div class="row col-md-12">
+							<div class="col-md-8">
+								<label for="listname2">Title of Travel Listing</label>
+								<select name="listname2" id="listname2" class="form-control" required>
+
+								</select>
+							</div>
+							<div class="col-md-3">
+								<label for="">Retrieve Current Listing Details</label>
+								<input type="button" value="Retrieve" class="btn btn-primary"
+									onclick="return fillblanks()">
+							</div>
+						</div>
+						<!-- Current details box -->
+						<div id="nowdetails" class="col-md-6 animate-box" style="margin-top: 5rem;">
+							<h4>Current listing details</h4>
+						</div>
+						<!-- form box -->
+						<div class="col-md-6 animate-box " style="margin-top: 5rem;">
+							<h4>New listing details</h4>
+							<form id="updatelisting">
+								<div class="row form-group">
+									<div class="col-md-12">
+										Title
+										<label class="sr-only" for="titleu">Title</label>
+										<input type="text" id="titleu" class="form-control"
+											placeholder="Title Of Listing (eg. 5N4N Jakarta)">
+									</div>
+
+								</div>
+
+								<div class="row form-group">
+									<div class="col-md-12">
+										Price
+										<label class="sr-only" for="priceu">Price</label>
+										<input type="text" id="priceu" class="form-control"
+											placeholder="Price (Omit $)">
+									</div>
+								</div>
+
+								<div class="row form-group">
+									<div class="col-md-12">
+										Country
+										<label class="sr-only" for="countryu">Country</label>
+										<input type="text" id="countryu" class="form-control" placeholder="Country">
+									</div>
+								</div>
+
+								<div class="row form-group">
+									<div class="col-md-12">
+										Period
+										<label class="sr-only" for="periodu">Period</label>
+										<input name="period" id="periodu" class="form-control"
+											placeholder="MMM-YYYY (eg. Sep 2020)">
+									</div>
+								</div>
+
+								<div class="row form-group">
+									<div class="col-md-12">
+										Description
+										<label class="sr-only" for="descriptionu">Description</label>
+										<textarea name="description" id="descriptionu" class="form-control" cols="30"
+											rows="10" placeholder="Description"></textarea>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<input type="submit" value="Update Travel Listing" class="btn btn-primary">
+								</div>
+							</form>
+						</div>
+					</div>
+					<!--end of Add listing form-->
+					<div class="col-md-6" style="margin-top: 9rem;">
+
 					</div>
 				</div>
 			</div>
@@ -366,6 +449,7 @@
 					<option value="${record.travelid}">${record.title}</option>
 				`;
 					$("#listname").append(countHtml);
+					$("#listname2").append(countHtml);
 				});
 			})
 			.catch((error) => {
@@ -414,7 +498,7 @@
 				id: titled,
 				activity: descriptiond,
 				day: day
-			},{ headers: { "authorization": "Bearer " + token } })
+			}, { headers: { "authorization": "Bearer " + token } })
 				.then(function (response) {
 					var data = response.data
 					if (response.status == 201) {
@@ -434,6 +518,76 @@
 	<script> function redirectiti() { //script for checking the selected listing's itinerary
 			travidval = $("#listname").val();
 			window.open(`http://localhost:3001/itinerary.html?travelid=${travidval}`, '_blank')
+		};
+	</script>
+
+
+	<script> // For updating a travel listing
+		$("#updatelisting").submit((event) => {
+			event.preventDefault();
+			var id = $("#listname2").val();
+			var titleuu = $("#titleu").val();
+			var priceuu = $("#priceu").val();
+			var perioduu = $("#periodu").val();
+			var descriptionuu = $("#descriptionu").val();
+			var countryuu = $("#countryu").val();
+			console.log(id,titleuu, priceuu, perioduu, descriptionuu, countryuu);
+			if (titleuu.length == 0) {
+				titleuu = $("#nowtitle").html().split(": ")[1];
+			} if (priceuu.toString().length == 0) {
+				priceuu = $("#nowprice").html().split(": ")[1];
+			} if (perioduu.length == 0) {
+				perioduu = $("#nowperiod").html().split(": ")[1];
+			} if (descriptionuu.length == 0) {
+				descriptionuu = $("#nowdesc").html().split(": ")[1];
+			} if (countryuu.length == 0) {
+				countryuu = $("#nowcountry").html().split(": ")[1];
+			}
+			console.log(titleuu, priceuu, perioduu, descriptionuu, countryuu);
+			axios.put(`${baseUrl}/travel/${id}`, {
+				title: titleuu,
+				price: priceuu,
+				travelPeriod: perioduu,
+				description: descriptionuu,
+				country: countryuu
+			}, { headers: { "authorization": "Bearer " + token } })
+				.then(function (response) {
+					var data = response.data
+					if (response.status == 204) {
+						var msgalt = "Successfully Updated!";
+						window.alert(msgalt);
+					}
+				})
+				.catch(function (error) {
+					console.log(error);
+				});
+
+			return false;
+		});
+	</script>
+
+	<script> function fillblanks() { //script for filling in selected listing's details
+			travidval2 = $("#listname2").val();
+			axios.get(`${baseUrl}/travel/${travidval2}`)
+				.then((response) => {
+					const travels = response.data;
+					travels.forEach((record) => {
+						const counttHtml = `
+					<h4>Current listing details</h4>
+					<div id="nowtitle">Title: ${record.title}</div>
+					<div id="nowprice">Price: ${record.price}</div>
+					<div id="nowcountry">Country: ${record.country}</div>
+					<div id="nowperiod">Period: ${record.travelPeriod}</div>
+					<div id="nowdesc">Description: ${record.description}</div>
+				`;
+						$("#nowdetails").html(" ")
+						$("#nowdetails").append(counttHtml);
+					});
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+
 		};
 	</script>
 
