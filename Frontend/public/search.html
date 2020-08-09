@@ -69,9 +69,6 @@
         if (token === null || isNaN(loggedInUserID)) {
             window.location.href = "login.html";
 		}
-		if (userRole === "admin"){
-			$("header-bar").append(`<li><a href="admin.html">Admin</a></li>`)
-		}
 	</script>
 	<script>
 		function logout(){
@@ -109,8 +106,9 @@
 					console.log(price)
 					const travels = response.data;
 					for (i = 0; i < travels.length; i++) {
-						if (travels[i].price > price && price > 0) {
-							travels[i].splice(i, 1);
+						console.log(travels[i].price)
+						if (travels[i].price > price) {
+							travels.splice(i,1)
 						}
 					}
 					travels.forEach((record) => {
@@ -152,17 +150,6 @@
 						</div>
 						<div class="col-xs-8 text-right menu-1">
 							<ul id="header-bar">
-								<li><a href="destination.html">Destination</a></li>
-								<li class="has-dropdown">
-									<a href="#">Travel</a>
-									<ul class="dropdown">
-										<li><a href="#">Europe</a></li>
-										<li><a href="#">Asia</a></li>
-										<li><a href="#">America</a></li>
-										<li><a href="#">Canada</a></li>
-									</ul>
-								</li>
-								<li><a href="pricing.html">Pricing</a></li>
 								<li><a href="" onclick="logout()">Logout</a></li>
 							</ul>
 						</div>

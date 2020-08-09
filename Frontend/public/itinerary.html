@@ -95,7 +95,7 @@
 	<div class="gtco-loader"></div>
 
 	<div id="page">
-		<script>
+		<script> //script to display the itinerary records
 			const urlParams = new URLSearchParams(window.location.search);
 			const travelid = urlParams.get('travelid');
 			// API url
@@ -137,17 +137,6 @@
 						</div>
 						<div class="col-xs-8 text-right menu-1">
 							<ul id="header-bar">
-								<li><a href="destination.html">Destination</a></li>
-								<li class="has-dropdown">
-									<a href="#">Travel</a>
-									<ul class="dropdown">
-										<li><a href="#">Europe</a></li>
-										<li><a href="#">Asia</a></li>
-										<li><a href="#">America</a></li>
-										<li><a href="#">Canada</a></li>
-									</ul>
-								</li>
-								<li><a href="pricing.html">Pricing</a></li>
 								<li><a href="" onclick="logout()">Logout</a></li>
 							</ul>
 						</div>

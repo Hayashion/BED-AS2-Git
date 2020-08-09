@@ -111,24 +111,24 @@ var travelDB = {
 
 // FUNCTIONS NOT IN USE
 //Q7
-deleteTravel: function (id, callback) {
-    var conn = db.getConnection();
-    conn.connect(function (err) {
-        if (err) {
-            return callback(err, null);
-        }
-        else {
-            var sql = 'DELETE FROM travel WHERE travelid = ?';
-            conn.query(sql, [id], function (err, result) {
-                conn.end();
-                if (err) {
-                    return callback(err, null);
-                } else {
-                    return callback(null, result);
-                }
-            });
-        }
-    });
-},
+// deleteTravel: function (id, callback) {
+//     var conn = db.getConnection();
+//     conn.connect(function (err) {
+//         if (err) {
+//             return callback(err, null);
+//         }
+//         else {
+//             var sql = 'DELETE FROM travel WHERE travelid = ?';
+//             conn.query(sql, [id], function (err, result) {
+//                 conn.end();
+//                 if (err) {
+//                     return callback(err, null);
+//                 } else {
+//                     return callback(null, result);
+//                 }
+//             });
+//         }
+//     });
+// },
 
 module.exports = travelDB; //Exported as userDB

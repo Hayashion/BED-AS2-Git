@@ -156,7 +156,7 @@
 				</div>
 			</div>
 		</header>
-		<script>
+		<script> //login script
 			const baseUrl = "http://localhost:8081";
 			$("#loginform").submit((event) => {
 				// prevent page reload
@@ -177,7 +177,10 @@
 						localStorage.setItem("token", token);
 						localStorage.setItem("loggedInUserID", loggedInUserID);
 						localStorage.setItem("userRole", userRole);
-						window.location.replace("index.html");
+						if (userRole == "admin"){
+							window.location.replace("admin.html");
+						}
+						else {window.location.replace("index.html")};
 					})
 					.catch((error) => {
 						if(error.response.status==401){

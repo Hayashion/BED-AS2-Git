@@ -78,9 +78,7 @@
 		if (token === null || userRole != "admin") {
 			window.location.href = "login.html";
 		}
-		if (userRole === "admin") {
-			$("header-bar").append(`<li><a href="admin.html">Admin</a></li>`)
-		}
+
 		function logout() {
 			localStorage.removeItem("token");
 			localStorage.removeItem("loggedInUserID");
@@ -95,33 +93,22 @@
 	<div id="page">
 
 		<!-- <div class="page-inner"> -->
-		<nav class="gtco-nav" role="navigation">
-			<div class="gtco-container">
-
-				<div class="row">
-					<div class="col-sm-4 col-xs-12">
-						<div id="gtco-logo"><a href="index.html">sptravel <em>.</em></a></div>
+			<nav class="gtco-nav" role="navigation">
+				<div class="gtco-container">
+	
+					<div class="row">
+						<div class="col-sm-4 col-xs-12">
+							<div id="gtco-logo"><a href="index.html">sptravel <em>.</em></a></div>
+						</div>
+						<div class="col-xs-8 text-right menu-1">
+							<ul id="header-bar">
+								<li><a href="" onclick="logout()">Logout</a></li>
+							</ul>
+						</div>
 					</div>
-					<div class="col-xs-8 text-right menu-1">
-						<ul id="header-bar">
-							<li><a href="destination.html">Destination</a></li>
-							<li class="has-dropdown">
-								<a href="#">Travel</a>
-								<ul class="dropdown">
-									<li><a href="#">Europe</a></li>
-									<li><a href="#">Asia</a></li>
-									<li><a href="#">America</a></li>
-									<li><a href="#">Canada</a></li>
-								</ul>
-							</li>
-							<li><a href="pricing.html">Pricing</a></li>
-							<li><a href="" onclick="logout()">Logout</a></li>
-						</ul>
-					</div>
+	
 				</div>
-
-			</div>
-		</nav>
+			</nav>
 
 		<header id="gtco-header" class="gtco-cover gtco-cover-sm" role="banner"
 			style="background-image: url(images/img_6.jpg)">
@@ -141,7 +128,7 @@
 			</div>
 		</header>
 
-		<div class="gtco-section border-bottom">
+		<div class="gtco-section border-bottom"> <!-- forms under here  -->
 			<div class="gtco-container">
 				<div class="row">
 					<!-- Start of Add Listing form  -->

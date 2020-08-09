@@ -31,7 +31,7 @@ CREATE TABLE `itinerary` (
   PRIMARY KEY (`itineraryid`),
   KEY `travelid_idx` (`travelid`),
   CONSTRAINT `itinerary to travel link` FOREIGN KEY (`travelid`) REFERENCES `travel` (`travelid`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +40,7 @@ CREATE TABLE `itinerary` (
 
 LOCK TABLES `itinerary` WRITE;
 /*!40000 ALTER TABLE `itinerary` DISABLE KEYS */;
-INSERT INTO `itinerary` VALUES (1,1,1,'Visit Perth Fremantle Market','2020-06-18 08:47:13'),(2,2,1,'Visit Asakusa Temple','2020-06-18 13:26:23'),(3,2,2,'Akihabara','2020-06-18 13:35:23'),(4,3,1,'Downtown','2020-06-18 13:35:23');
+INSERT INTO `itinerary` VALUES (2,2,1,'Asakusa Temple','2020-06-18 13:26:23'),(3,2,2,'Akihabara','2020-06-18 13:35:23'),(4,3,1,'Downtown','2020-06-18 13:35:23'),(6,2,3,'Visit to the East Garderns of the Imperial Palace ','2020-08-03 06:37:02'),(7,2,4,'Teamlabs Borderless','2020-08-03 07:19:45'),(8,2,4,'asdf','2020-08-04 07:22:43');
 /*!40000 ALTER TABLE `itinerary` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -72,7 +72,7 @@ CREATE TABLE `review` (
 
 LOCK TABLES `review` WRITE;
 /*!40000 ALTER TABLE `review` DISABLE KEYS */;
-INSERT INTO `review` VALUES (1,1,1,'The vacation was great! The view and food were excellent!',5,'2020-06-18 08:22:27'),(2,4,2,'The place were great and the people were friendly!',5,'2020-06-18 13:21:43'),(3,5,1,'The guide was super helpful!!',4,'2020-06-18 13:21:43'),(4,3,2,'Japan is a great place, the weather was nice and the food was excellent!',5,'2020-06-18 13:24:10'),(5,2,3,'Melbourne is great!',4,'2020-06-18 13:34:15');
+INSERT INTO `review` VALUES (2,4,2,'The place were great and the people were friendly!',5,'2020-06-18 13:21:43'),(4,3,2,'Japan is a great place, the weather was nice and the food was excellent!',5,'2020-06-18 13:24:10'),(5,2,3,'Melbourne is great!',4,'2020-06-18 13:34:15');
 /*!40000 ALTER TABLE `review` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -91,7 +91,7 @@ CREATE TABLE `travel` (
   `country` varchar(400) NOT NULL,
   `travelPeriod` varchar(300) NOT NULL,
   PRIMARY KEY (`travelid`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -100,7 +100,7 @@ CREATE TABLE `travel` (
 
 LOCK TABLES `travel` WRITE;
 /*!40000 ALTER TABLE `travel` DISABLE KEYS */;
-INSERT INTO `travel` VALUES (1,'6D5N Perth ','Perth, capital of Western Australia, sits where the Swan River meets the southwest coast. Sandy beaches line its suburbs, and the huge, riverside Kings Park and Botanic Garden on Mount Eliza offer sweeping views of the city. Enjoy your 6D5N tour to Perth with SP Tours',1650,'Australia','Dec 2020'),(2,'10D9N Tokyo','Tokyo, the captial of the land of the rising sun.',3000,'Japan','Mar 2021'),(3,'5D4N Melbourne','Melbourne is a sunny place.',2500,'Australia','Jan 2021'),(5,'5D4N New York','Lincoln Monument',2800,'U.S.A','Dec 2021');
+INSERT INTO `travel` VALUES (2,'10D9N Tokyo','Tokyo, the captial of the land of the rising sun.',3600,'Japan','Mar 2021'),(3,'5D4N Melbourne','Melbourne is a sunny place.',2500,'Australia','Jan 2021'),(5,'6D5N New York','Lincoln Monument',4200,'U.S.','Aug 2021'),(6,'6D5N Macau','Its Macau Yo',2400,'China','Mar 2022'),(9,'5D4N Jakarta','Enjoy a tour in the bustling city of Jakarta, the capitol of Indonesia.',2800,'Indonesia','Jun 2021'),(25,'10D9N Tokyo','Tokyo, the captial of the land of the rising sun.',4000,'Japan','Jun 2021'),(26,'10D9N Tokyo','Tokyo, the captial of the land of the rising sun.',8000,'Japan','Mar 2021'),(27,'10D9N Tokyo','Tokyo, the captial of the land of the rising sun.',3200,'Japan','May 2021');
 /*!40000 ALTER TABLE `travel` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -117,10 +117,12 @@ CREATE TABLE `user` (
   `email` varchar(500) NOT NULL,
   `profilepicURL` varchar(1000) NOT NULL,
   `createdDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `password` varchar(200) NOT NULL,
+  `role` varchar(45) NOT NULL,
   PRIMARY KEY (`userid`),
   UNIQUE KEY `email_UNIQUE` (`email`),
   UNIQUE KEY `username_UNIQUE` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -129,7 +131,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'John Doe','john@abc.com','https://www.abc.com/terry.jpg','2020-06-18 08:18:00'),(2,'David Wallace','david@gmail.com','https://www.abc.com/car.jpg','2020-06-18 08:18:00'),(3,'Mary Bricker','mary@xyz.com','https://www.abc.com/dog.jpg','2020-06-18 08:18:00'),(4,'Jamie Toh','jamiet@gmail.com','https://www.abc.com/psa.jpg','2020-06-18 11:01:59'),(5,'Michael Scott','MScott@gmail.com','https://www.abc.com/paper.jpg','2020-06-18 11:07:54');
+INSERT INTO `user` VALUES (1,'John Doe','john@abc.com','https://www.abc.com/terry.jpg','2020-06-18 08:18:00','password','user'),(2,'David Wallace','david@gmail.com','https://www.abc.com/car.jpg','2020-06-18 08:18:00','password','user'),(3,'Mary Bricker','mary@xyz.com','https://www.abc.com/dog.jpg','2020-06-18 08:18:00','password','user'),(4,'Jamie Toh','jamiet@gmail.com','https://www.abc.com/psa.jpg','2020-06-18 11:01:59','password','user'),(5,'Michael Scott','MScott@gmail.com','https://www.abc.com/paper.jpg','2020-06-18 11:07:54','password','user'),(6,'admin','admin@gmail.com','https://www.abc.com/anon.jpg','2020-06-18 11:01:59','admin','admin');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -142,4 +144,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-06-18 22:13:04
+-- Dump completed on 2020-08-10  0:44:04
