@@ -1,4 +1,6 @@
-Tan Jia Wei	 P190458	DISM/2A/02	09.08.2020
+Tan Jia Wei	DISM/2A/02	09.08.2020
+
+<img width="1920" height="933" alt="firefox_XT3lq5YLkC" src="https://github.com/user-attachments/assets/388b620c-2c97-4eaf-9d69-33b4bb30bd03" />
 
 How to get set up:
 
